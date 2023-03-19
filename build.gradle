@@ -1,5 +1,8 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.8.0'
+    id 'application'
+    id 'co.uzzu.dotenv.gradle' version "2.0.0"
+    id 'base'
 }
 
 group = 'ru.skroba'
@@ -9,13 +12,31 @@ repositories {
     mavenCentral()
 }
 
+application {
+    mainClass = 'ru.skroba.fitness.center.Main'
+}
+
 dependencies {
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
+    implementation 'io.reactivex:rxnetty-http:0.5.3'
+    implementation 'io.netty:netty-all:4.1.86.Final'
+    implementation 'io.reactivex:rxnetty-tcp:0.5.2'
+    implementation 'io.reactivex:rxnetty-common:0.5.2'
+
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 test {
     useJUnitPlatform()
 }
+
+run {
+    environment = env.allVariables
+}
+
 
 kotlin {
     jvmToolchain(8)
